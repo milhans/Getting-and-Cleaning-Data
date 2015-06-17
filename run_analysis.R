@@ -14,7 +14,6 @@ if(!file.exists("./data")){
  
 ## Get Files
 mypath <- file.path("./data", "UCI HAR Dataset")
-filesList <- list.files(mypath, recursive=TRUE)
 
 ## Read Activity Files
 activityTest <- read.table(file.path(mypath, "test", "y_test.txt"), col.names = "Label")
