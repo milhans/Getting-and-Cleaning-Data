@@ -20,16 +20,13 @@ filesList <- list.files(mypath, recursive=TRUE)
 activityTest <- read.table(file.path(mypath, "test", "y_test.txt"), col.names = "Label")
 activityTrain <- read.table(file.path(mypath, "train", "y_train.txt"), col.names = "Label")
 
-
 ## Read Subject Files
 subjectTest <- read.table(file.path(mypath, "test", "subject_test.txt"), col.names=c("Subject"))
 subjectTrain <- read.table(file.path(mypath, "train", "subject_train.txt"), col.names=c("Subject"))
 
-
 ## Read Features Files
 featuresTest  <- read.table(file.path(mypath, "test" , "X_test.txt" ),header = FALSE)
 featuresTrain <- read.table(file.path(mypath, "train", "X_train.txt"),header = FALSE)
-
 
 # Merge files w/ rbind
 activityMerge <- rbind(activityTest, activityTrain)
@@ -53,10 +50,10 @@ featuresMerge <- featuresMerge[,featuresMeanStd]
 
 # Feature char vector w/ only mean or std in name
 featuresList <- as.character(featuresNames$FeatureLabels[featuresMeanStd])
-# Clean features from non-alpha chars
 
 # Combine all data
 allData <- cbind(featuresMerge, activityMerge, subjectMerge)
+
 # Select mean and std columns, add 2 to account for sujects and labels
 #dataMeanStd <- allData[, c(1, 2, featuresList+2)]
 
@@ -78,6 +75,7 @@ cleanNames <- names(cleanData)
 cleanNames <- gsub("[^[:alpha:]]", "", cleanNames)
 cleanNames <- gsub('BodyBody', 'Body', cleanNames)
 cleanData <-setNames(cleanData, cleanNames)
+
 # Write output file
 write.table(cleanData, file= "tidy.txt", row.names=FALSE)
 
