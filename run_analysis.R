@@ -1,8 +1,8 @@
 ## Get Data - Coursera - Jackie Milhans - Project
 
+## Load necessary libraries
 library(plyr)
 library(reshape2)
-
 
 ## Read Data
 if(!file.exists("./data")){
@@ -12,7 +12,6 @@ if(!file.exists("./data")){
         unzip(zipfile="./data/projdata.zip",exdir="./data")
 }
  
-
 ## Get Files
 mypath <- file.path("./data", "UCI HAR Dataset")
 filesList <- list.files(mypath, recursive=TRUE)
@@ -55,16 +54,11 @@ featuresMerge <- featuresMerge[,featuresMeanStd]
 # Feature char vector w/ only mean or std in name
 featuresList <- as.character(featuresNames$FeatureLabels[featuresMeanStd])
 # Clean features from non-alpha chars
-#featuresList <- gsub("[^[:alpha:]]","",featuresList)
 
 # Combine all data
 allData <- cbind(featuresMerge, activityMerge, subjectMerge)
 # Select mean and std columns, add 2 to account for sujects and labels
 #dataMeanStd <- allData[, c(1, 2, featuresList+2)]
-
-# Current column names
-#curCol <- c("subject", "label", featuresMeanStd$FeatureLabels)
-#curCol <- gsub("[^[:alpha:]]", "", curCol)
 
 # Melt data for reshape
 cleanData <- melt(allData, id = c("Subject", "Activity"), measure.vars = featuresList)
