@@ -79,6 +79,11 @@ cleanData <- cleanData[order(cleanData$Subject, cleanData$Activity),]
 rownames(cleanData) <- 1:nrow(cleanData)
 cleanData <- cleanData[,c(2,1,3:68)]
 
+# Tidy up features names
+cleanNames <- names(cleanData)
+cleanNames <- gsub("[^[:alpha:]]", "", cleanNames)
+cleanNames <- gsub('BodyBody', 'Body', cleanNames)
+cleanData <-setNames(cleanData, cleanNames)
 # Write output file
 write.table(cleanData, file= "tidy.txt", row.names=FALSE)
 
